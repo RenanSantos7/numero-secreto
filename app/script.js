@@ -1,12 +1,9 @@
 // % SORTEAR NÚMERO
-let min = 0
-let max = 1000
+var min = 0
+var max = 1000
 var numeroSecreto
 
-
 numeroSecreto = parseInt(Math.random() * (max - min) + min);
-
-console.log(numeroSecreto)
 
 const menorValor = document.querySelector("#menor-valor")
 const maiorValor = document.querySelector("#maior-valor")
@@ -55,13 +52,22 @@ function validaChute(chute) {
 
 function comparaChute(chute) {
     if (chute === numeroSecreto) {
-        elemChute.innerHTML += '<div class="mensagem-acerto">Aeee!</div><div class="mensagem-acerto">Você acertou!!</div>'
-        recognition.stop()
+        elemChute.innerHTML += '<div class="mensagem-acerto"> Aeee!</div> <div class="mensagem-acerto" > Você acertou!!</div>'
+        elemChute.innerHTML += '<button id="jogar-novamente" class="botao-novo-jogo">Novo Jogo</button>'
+        //recognition.stop()
     } else {
         if (numeroSecreto > chute) {
             elemChute.innerHTML += '<div>O número secreto é maior <i class="fa-solid fa-circle-up"></i></div>'
-        } else if ((numeroSecreto < chute)){
+        } else if (numeroSecreto < chute){
             elemChute.innerHTML += '<div>O número secreto é menor <i class="fa-solid fa-circle-down"></i></div>'
         }
     }
 }
+
+// % Jogar Novamente
+
+document.body.addEventListener('click', (ev) => {
+    if (ev.target.id === 'jogar-novamente') {
+        window.location.reload()
+    }
+})
