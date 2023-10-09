@@ -13,14 +13,20 @@ maiorValor.innerHTML = max
 
 // % Web Speech Speech Recognition 
 const elemChute = document.querySelector("#chute")
-
 var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
+
 recognition.lang = 'pt-Br'
 
 recognition.start()
 
 recognition.addEventListener('result', onSpeak)
+
+recognition.addEventListener('end', () => {
+    if (!acertou) {
+        recognition.start()
+    }
+})
 
 function onSpeak(e) {
     let chute = e.results[0][0].transcript
@@ -39,7 +45,6 @@ function onSpeak(e) {
     validaChute(chute)
 }
 
-recognition.addEventListener('end', () => recognition.start())
 
 // % Validação
 
@@ -51,10 +56,11 @@ function validaChute(chute) {
 }
 
 function comparaChute(chute) {
+    var acertou = false
     if (chute === numeroSecreto) {
         elemChute.innerHTML += '<div class="mensagem-acerto"> Aeee!</div> <div class="mensagem-acerto" > Você acertou!!</div>'
         elemChute.innerHTML += '<button id="jogar-novamente" class="botao-novo-jogo">Novo Jogo</button>'
-        //recognition.stop()
+        acertou = true
     } else {
         if (numeroSecreto > chute) {
             elemChute.innerHTML += '<div>O número secreto é maior <i class="fa-solid fa-circle-up"></i></div>'
